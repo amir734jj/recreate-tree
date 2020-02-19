@@ -1,4 +1,5 @@
 from node import Node
+from utility import peak, push, pop
 
 
 def pre_order_calc(l):
@@ -6,23 +7,24 @@ def pre_order_calc(l):
 
     root = Node()
     root.value = l[0]
-    st.append(root)
+    push(st, root)
 
     for i in range(1, len(l)):
         temp = None
 
-        while len(st) > 0 and l[i] > st[len(st) - 1].value:
-            temp = st.pop()
+        while len(st) > 0 and l[i] > peak(st).value:
+            temp = pop(st)
 
         if temp is not None:
             temp.right = Node()
             temp.right.value = l[i]
-            st.append(temp.right)
+
+            push(st, temp.right)
         else:
-            temp = st[len(st) - 1]
+            temp = peak(st)
             temp.left = Node()
             temp.left.value = l[i]
 
-            st.append(temp.left)
+            push(st, temp.left)
 
     return root
